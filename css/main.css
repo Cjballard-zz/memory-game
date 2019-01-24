@@ -58,24 +58,25 @@ body {
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
 }
 
- /*
+ 
 .deck .card.open {
     transform: rotateY(0);
-    background: #02b3e4;
-    cursor: default;
-}*/
+    background: #ff0000;
+}
 
-/*
+
 .deck .card.show {
-    font-size: 33px;
+    font-size: 36px;
 }
 
 .deck .card.match {
-    cursor: default;
     background: #02ccba;
-    font-size: 33px;
 }
-*/ 
+
+.deck .card.unmatched {
+    background: #1b1b5c;
+}
+
 
 /*
  * Styles for the Score Panel
@@ -102,4 +103,10 @@ body {
 .score .restart {
     float: right;
     cursor: pointer;
+}
+
+.timer {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
 }
