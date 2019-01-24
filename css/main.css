@@ -110,3 +110,49 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+
+.modal .show {
+    display: none;
+}
+
+.modal .show {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    top: 30%;
+    left: 44%;
+    background-color: white;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+}
+
+
+.modal .show h1 {
+    text-align: center;
+    font-size: 24px;
+    padding-top: 10px;
+}
+
+.modal .show p {
+    text-align: center;
+    font-size: 16px;
+}
+
+.modal .show button {
+    display: flex; 
+    justify-content: center;
+    background-color: #ff0000;
+    font-size: 16px;
+}
+
+.popup {
+    display: none;
+}
+
+.popup .show {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
