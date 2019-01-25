@@ -6,6 +6,8 @@
 const deck = document.querySelector('.deck');
 const stars = document.querySelectorAll('ul.stars li');
 const modal = document.querySelector('.modal');
+let card = document.getElementsByClassName("card");
+let cards = [...card];
 let toggledCards = [];
 let moves = 0;
 let timerStop = true;
@@ -19,7 +21,7 @@ let timerId;
  */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(cards) {
+function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
@@ -33,6 +35,16 @@ function shuffle(cards) {
     return array;
 };
 
+// Loop through the cards, shuffle them and remove any classes.
+function switchCards(){
+    var shuffledCards = shuffle(cards);
+    for (var i= 0; i < shuffledCards.length; i++){
+       [].forEach.call(shuffledCards, function(item){
+          deck.appendChild(item);
+          card[i].classList.remove('show', 'open', 'match', 'unmatched');
+       });
+    }
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -45,6 +57,7 @@ function shuffle(cards) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
 */
 
+
 // Returning star ratings based on amount of moves a player makes.
 function getScore () {
     //If given a certain number of moves, remove child stars from page.
@@ -54,7 +67,7 @@ function getScore () {
     else if (moves >= 14 && moves < 18) {
         document.querySelector('ul.stars').removeChild(stars[0, 1]);
     }
-    else if (moves >=18)
+    else if (moves >= 18)
         document.querySelector('ul.stars').removeChild(stars[0, 1, 2]);
 }
 
@@ -66,23 +79,23 @@ function countMoves() {
     getScore();
 }
 
-// Start the game timer.
+// Start up the game timer.
 function timerStart() {
     time = 0;
     timerId = setInterval(() => {
         time++;
         showTimer();
-        console.log(time);
     }, 1000);
 }
 
 // Display the timer on the page and make it human-readable.
 function showTimer () {
     const timer = document.querySelector('.clock');
-    console.log(timer);
     timer.innerHTML = time;
+
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
+    // Add a 0 if the second is below 10.
     if (seconds < 10) {
         timer.innerHTML = `${minutes}:0${seconds}`;
     } else {
@@ -106,6 +119,7 @@ deck.addEventListener('click', function () {
         if (toggledCards.length === 2) {
             findMatch(clickTarget);
             countMoves();
+        // If the timer isn't running, start it up.
         if (timerStop) {
             timerStart();
             timerStop = false;
@@ -123,7 +137,6 @@ function toggleCard(card) {
 // Push the card to our toggledCards array.
 function addToggleCard(clickTarget) {
     toggledCards.push(clickTarget);
-    console.log(toggledCards);
 }
 
 // Search to see if we have a match.
@@ -134,7 +147,6 @@ function findMatch () {
         toggledCards = [];
     } else {
         setTimeout(function() {
-            console.log('No match');
             toggleCard(toggledCards[0]);
             toggleCard(toggledCards[1]);
             toggledCards = [];
@@ -142,10 +154,47 @@ function findMatch () {
     }
 };
 
+// Reset the move count back to 0;
+function resetMoves () {
+    moves = 0;
+    document.querySelector('.moves').innerHTML = moves;
+}
+
+// add stars back
+function addStars() {
+    if (document.querySelector('ul.stars').childElementCount == 2 ) {
+        document.querySelector('ul.stars').appendChild(stars[0]);
+    }
+    else if (document.querySelector('ul.stars').childElementCount == 1 ) {
+        document.querySelector('ul.stars').appendChild(stars[0,1]);
+    }
+    else if (document.querySelector('ul.stars').childElementCount == 0 ) {
+        document.querySelector('ul.stars').appendChild(stars[0,1,2]);
+    }
+    else {};
+}
+
+// Resetting a game should reset the timer, shuffle the cards and add the stars back.
+function resetGame () {
+    resetTimer();
+    timerStop = true;
+    time = 0;
+    showTimer();
+    resetMoves();
+    addStars();
+    switchCards();
+}
+
+// Reset the game on the restart button
+document.querySelector('.restart').addEventListener('click', resetGame);
+// Reset the game from the win modal.
+document.querySelector('modal.show button').addEventListener('click', resetGame);
+
 // Show the congratulations modal if all cards are matched.
 function win() {
     if (toggledCards == 16) {
         timerStop();
-        popup.classList.add("show");
+        popup.classList.add('.show');
+        modal.classList.add('.show');
     }
 }
