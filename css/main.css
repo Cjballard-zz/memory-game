@@ -18,7 +18,7 @@ body {
 
 body {
     background: #ffffff;
-    font-family: 'Lato', 'Helvetica', sans-serif;
+    font-family: 'Libre Franklin', 'Helvetica', sans-serif;
 }
 
 .container {
@@ -26,6 +26,11 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+body h1 {
+    font-size: 34px;
+    font-weight: 300px;
 }
 
 /*
@@ -46,8 +51,8 @@ body {
 
 .deck .card {
     height: 125px;
-    width: 125px;
-    background: #2e3d49;
+    width: 22%;
+    background: #1C3341;
     font-size: 0;
     color: #ffffff;
     border-radius: 8px;
@@ -61,7 +66,7 @@ body {
  
 .deck .card.open {
     transform: rotateY(0);
-    background: #ff0000;
+    background: #F2C975;
 }
 
 
@@ -70,11 +75,11 @@ body {
 }
 
 .deck .card.match {
-    background: #02ccba;
+    background: #008773;
 }
 
 .deck .card.unmatched {
-    background: #1b1b5c;
+    background: #1C3341;
 }
 
 
@@ -83,16 +88,20 @@ body {
  */
 
 .score {
+    display: flex;
+    width: 100%;
     text-align: left;
     width: 345px;
     margin-bottom: 10px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .score .stars {
-    margin: 0;
+    width: 20%;
     padding: 0;
     display: inline-block;
-    margin: 0 5px 0 0;
+    margin: auto;
 }
 
 .score .stars li {
@@ -100,55 +109,77 @@ body {
     display: inline-block;
 }
 
+.score .moves {
+    display: flex;
+    width: 5%;
+}
+
+.score .timer {
+    display: flex;
+    color: #737373;
+    width: 20%;
+    margin: auto;
+}
+
 .score .restart {
-    float: right;
+    width: 10%;
+    margin: auto;
     cursor: pointer;
 }
 
-.timer {
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.modal .show {
+.modal {
     display: none;
 }
 
-.modal .show {
-    position: relative;
-    width: 300px;
-    height: 300px;
-    top: 30%;
-    left: 44%;
+.modal.show {
+    display: flex;
+    flex-wrap: wrap;
+    width: 40%;
+    height: 180px;
+    margin: auto;
     background-color: white;
     box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    text-align: center;
+    border: none; 
+    border:solid 1px #008773;
+    border-radius: 8px;
 }
 
 
-.modal .show h1 {
-    text-align: center;
+.modal.show h1 {
+    width: 100%;
     font-size: 24px;
+    font-weight: 400;
     padding-top: 10px;
+    margin: auto;
 }
 
-.modal .show p {
-    text-align: center;
+.modal.show p {
+    width: 100%;
     font-size: 16px;
+    margin: auto;
 }
 
-.modal .show button {
-    display: flex; 
-    justify-content: center;
-    background-color: #ff0000;
+.modal.show .retry {
+    width: 50%;
+    height: 50px;
+    margin: auto;
+    border: none; 
+    border:solid 1px #008773;
+    border-radius: 8px;
+    background-color: #008773;
     font-size: 16px;
+    font-weight: 400;
+    color: white;
 }
 
 .popup {
     display: none;
 }
 
-.popup .show {
+.popup.show {
+    display: flex;
     position: absolute;
     top: 0;
     left: 0;

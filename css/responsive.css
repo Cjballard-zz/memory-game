@@ -1,6 +1,56 @@
 @media screen and (min-width: 550px) {
     body h1 {
-        font-size: 28px;
+        font-weight: 300;
+        font-size: 40px;
+    }
+}
+
+@media screen and (max-width: 549px) {
+    body h1 {
+        font-weight: 300;
+        font-size: 30px;
+    }
+    .deck {
+        width: 100%;
+    }
+
+    .deck .card {
+        width: 30%;
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    body h1 {
+        font-weight: 300;
+        font-size: 24px;
+    }
+
+    .deck {
+        width: 100%;
+    }
+
+    .deck .card {
+        width: 48%;
+        margin-top: 20px;
+    }
+
+    .score .stars {
+        padding-left: 10px;
+        margin-left: 40px;
+    }
+    
+    .score .moves {
+        display: flex;
+        width: 5%;
+    }
+    
+    .score .timer {
+        width: 10%;
+    }
+    
+    .score .restart {
+        margin-right: 40px;
     }
 }
 

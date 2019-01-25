@@ -5,10 +5,13 @@
 
 const deck = document.querySelector('.deck');
 const stars = document.querySelectorAll('ul.stars li');
+const popup = document.querySelector('.popup');
 const modal = document.querySelector('.modal');
 let card = document.getElementsByClassName("card");
 let cards = [...card];
 let toggledCards = [];
+let matched = 0;
+const pairs = 8;
 let moves = 0;
 let timerStop = true;
 let timerId;
@@ -19,6 +22,7 @@ let timerId;
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -36,12 +40,14 @@ function shuffle(array) {
 };
 
 // Loop through the cards, shuffle them and remove any classes.
-function switchCards(){
+function switchCards() {
     var shuffledCards = shuffle(cards);
     for (var i= 0; i < shuffledCards.length; i++){
        [].forEach.call(shuffledCards, function(item){
           deck.appendChild(item);
           card[i].classList.remove('show', 'open', 'match', 'unmatched');
+          modal.classList.remove('show');
+          popup.classList.remove('show');
        });
     }
 }
@@ -59,16 +65,16 @@ function switchCards(){
 
 
 // Returning star ratings based on amount of moves a player makes.
-function getScore () {
+function getScore() {
     //If given a certain number of moves, remove child stars from page.
-    if (moves > 8 && moves < 14) {
+    if (moves === 8) {
         document.querySelector('ul.stars').removeChild(stars[0]);
     }
-    else if (moves >= 14 && moves < 18) {
-        document.querySelector('ul.stars').removeChild(stars[0, 1]);
+    else if (moves === 14) {
+        document.querySelector('ul.stars').removeChild(stars[1]);
     }
-    else if (moves >= 18)
-        document.querySelector('ul.stars').removeChild(stars[0, 1, 2]);
+    else if (moves === 18)
+        document.querySelector('ul.stars').removeChild(stars[2]);
 }
 
 // Count the number of moves and hit the getScore function to remove a star if necessary.
@@ -89,7 +95,7 @@ function timerStart() {
 }
 
 // Display the timer on the page and make it human-readable.
-function showTimer () {
+function showTimer() {
     const timer = document.querySelector('.clock');
     timer.innerHTML = time;
 
@@ -140,12 +146,17 @@ function addToggleCard(clickTarget) {
 }
 
 // Search to see if we have a match.
-function findMatch () {
+function findMatch() {
     if (toggledCards[0].firstElementChild.className === toggledCards[1].firstElementChild.className) {
         toggledCards[0].classList.toggle('match');
         toggledCards[1].classList.toggle('match');
         toggledCards = [];
-    } else {
+        matched++;
+    } 
+    else if (matched == 8 ) {
+        console.log("hello");
+    }
+    else {
         setTimeout(function() {
             toggleCard(toggledCards[0]);
             toggleCard(toggledCards[1]);
@@ -155,27 +166,30 @@ function findMatch () {
 };
 
 // Reset the move count back to 0;
-function resetMoves () {
+function resetMoves() {
     moves = 0;
     document.querySelector('.moves').innerHTML = moves;
 }
 
-// add stars back
+// Adding stars back 
 function addStars() {
-    if (document.querySelector('ul.stars').childElementCount == 2 ) {
+    if (document.querySelector('ul.stars').childElementCount === 2 ) {
         document.querySelector('ul.stars').appendChild(stars[0]);
     }
-    else if (document.querySelector('ul.stars').childElementCount == 1 ) {
-        document.querySelector('ul.stars').appendChild(stars[0,1]);
+    else if (document.querySelector('ul.stars').childElementCount === 1 ) {
+        document.querySelector('ul.stars').appendChild(stars[0]);
+        document.querySelector('ul.stars').appendChild(stars[1]);
     }
-    else if (document.querySelector('ul.stars').childElementCount == 0 ) {
-        document.querySelector('ul.stars').appendChild(stars[0,1,2]);
+    else if (document.querySelector('ul.stars').childElementCount === 0 ) {
+        document.querySelector('ul.stars').appendChild(stars[0]);
+        document.querySelector('ul.stars').appendChild(stars[1]);
+        document.querySelector('ul.stars').appendChild(stars[2]);
     }
     else {};
-}
+} 
 
 // Resetting a game should reset the timer, shuffle the cards and add the stars back.
-function resetGame () {
+function resetGame() {
     resetTimer();
     timerStop = true;
     time = 0;
@@ -188,13 +202,22 @@ function resetGame () {
 // Reset the game on the restart button
 document.querySelector('.restart').addEventListener('click', resetGame);
 // Reset the game from the win modal.
-document.querySelector('modal.show button').addEventListener('click', resetGame);
+document.querySelector('.retry').addEventListener('click', resetGame);
+
+ // Showing the modal in its own function.
+ function showModal() {
+    popup.classList.add('show');
+    modal.classList.add('show');
+}
+
+if (matched === 8 ) {
+    console.log("Hello!")
+}
 
 // Show the congratulations modal if all cards are matched.
 function win() {
-    if (toggledCards == 16) {
+    if (matched === 8 ) {
+        showModal();
         timerStop();
-        popup.classList.add('.show');
-        modal.classList.add('.show');
     }
 }
