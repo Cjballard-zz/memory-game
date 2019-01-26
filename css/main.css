@@ -192,3 +192,14 @@ body h1 {
     background: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
+
+.printout {
+    display: none;
+}
+
+.printout.show {
+    display: flex;
+    margin: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}

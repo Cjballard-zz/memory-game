@@ -7,6 +7,7 @@ const deck = document.querySelector('.deck');
 const stars = document.querySelectorAll('ul.stars li');
 const popup = document.querySelector('.popup');
 const modal = document.querySelector('.modal');
+const printout = document.querySelector('.printout');
 let card = document.getElementsByClassName("card");
 let cards = [...card];
 let toggledCards = [];
@@ -42,6 +43,7 @@ function switchCards() {
           card[i].classList.remove('show', 'open', 'match', 'unmatched');
           modal.classList.remove('show');
           popup.classList.remove('show');
+          printout.classList.remove('show');
        });
     }
 }
@@ -145,6 +147,7 @@ function findMatch() {
         matched++;
         if (matched == pairs ) {
             showModal();
+            modalData();
             resetTimer();
             resetMatched();
         }
@@ -207,10 +210,20 @@ document.querySelector('.retry').addEventListener('click', resetGame);
  function showModal() {
     popup.classList.add('show');
     modal.classList.add('show');
+    printout.classList.add('show');
 }
 
 
 // Resets the 'matched' variable back to 0, so we can win after resetting the game.
 function resetMatched() {
     matched = 0;
+}
+
+// Grabs a snapshot of data for the modal.
+function modalData() {
+    const clockTime = document.querySelector('.clock').innerHTML;
+    const movesMade = document.querySelector('.moves').innerHTML;
+    const starsRating = document.querySelector('ul.stars').childElementCount;
+
+    printout.innerHTML = `It took you ${clockTime}. You made ${movesMade} moves. Your star rating is ${starsRating}.`
 }
