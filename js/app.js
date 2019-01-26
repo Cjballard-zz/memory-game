@@ -16,13 +16,6 @@ let moves = 0;
 let timerStop = true;
 let timerId;
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -39,6 +32,7 @@ function shuffle(array) {
     return array;
 };
 
+
 // Loop through the cards, shuffle them and remove any classes.
 function switchCards() {
     var shuffledCards = shuffle(cards);
@@ -52,30 +46,20 @@ function switchCards() {
     }
 }
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
-*/
-
 
 // Returning star ratings based on amount of moves a player makes.
 function getScore() {
-    //If given a certain number of moves, remove child stars from page.
-    if (moves === 8) {
+    // If given a certain number of moves, remove child stars from page.
+    if (moves === 14) {
         document.querySelector('ul.stars').removeChild(stars[0]);
     }
-    else if (moves === 14) {
+    else if (moves === 24) {
         document.querySelector('ul.stars').removeChild(stars[1]);
     }
-    else if (moves === 18)
+    else if (moves === 36)
         document.querySelector('ul.stars').removeChild(stars[2]);
 }
+
 
 // Count the number of moves and hit the getScore function to remove a star if necessary.
 function countMoves() {
@@ -84,6 +68,7 @@ function countMoves() {
     moveNumber.innerHTML = moves;
     getScore();
 }
+
 
 // Start up the game timer.
 function timerStart() {
@@ -94,11 +79,12 @@ function timerStart() {
     }, 1000);
 }
 
+
 // Display the timer on the page and make it human-readable.
 function showTimer() {
     const timer = document.querySelector('.clock');
     timer.innerHTML = time;
-
+    // Converts the time into readable format.
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
     // Add a 0 if the second is below 10.
@@ -109,10 +95,12 @@ function showTimer() {
     }
 }
 
+
 // Resets the timer.
 function resetTimer() {
     clearInterval(timerId);
 }
+
 
 // Core matching logic – listen for a click, and if the click target is valid, take action.
 deck.addEventListener('click', function () {
@@ -134,16 +122,19 @@ deck.addEventListener('click', function () {
     }
 });
 
+
 // Flip our cards to active.
 function toggleCard(card) {
     card.classList.toggle('open');
     card.classList.toggle('show');
 }
 
+
 // Push the card to our toggledCards array.
 function addToggleCard(clickTarget) {
     toggledCards.push(clickTarget);
 }
+
 
 // Search to see if we have a match.
 function findMatch() {
@@ -152,10 +143,13 @@ function findMatch() {
         toggledCards[1].classList.toggle('match');
         toggledCards = [];
         matched++;
+        if (matched == pairs ) {
+            showModal();
+            resetTimer();
+            resetMatched();
+        }
     } 
-    else if (matched == 8 ) {
-        console.log("hello");
-    }
+    // Or else we time out the unmatched cards.
     else {
         setTimeout(function() {
             toggleCard(toggledCards[0]);
@@ -165,13 +159,15 @@ function findMatch() {
     }
 };
 
+
 // Reset the move count back to 0;
 function resetMoves() {
     moves = 0;
     document.querySelector('.moves').innerHTML = moves;
 }
 
-// Adding stars back 
+
+// Adding stars back to reset the game rating.
 function addStars() {
     if (document.querySelector('ul.stars').childElementCount === 2 ) {
         document.querySelector('ul.stars').appendChild(stars[0]);
@@ -188,6 +184,7 @@ function addStars() {
     else {};
 } 
 
+
 // Resetting a game should reset the timer, shuffle the cards and add the stars back.
 function resetGame() {
     resetTimer();
@@ -199,10 +196,12 @@ function resetGame() {
     switchCards();
 }
 
+
 // Reset the game on the restart button
 document.querySelector('.restart').addEventListener('click', resetGame);
 // Reset the game from the win modal.
 document.querySelector('.retry').addEventListener('click', resetGame);
+
 
  // Showing the modal in its own function.
  function showModal() {
@@ -210,14 +209,8 @@ document.querySelector('.retry').addEventListener('click', resetGame);
     modal.classList.add('show');
 }
 
-if (matched === 8 ) {
-    console.log("Hello!")
-}
 
-// Show the congratulations modal if all cards are matched.
-function win() {
-    if (matched === 8 ) {
-        showModal();
-        timerStop();
-    }
+// Resets the 'matched' variable back to 0, so we can win after resetting the game.
+function resetMatched() {
+    matched = 0;
 }
