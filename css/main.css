@@ -131,6 +131,7 @@ body h1 {
     cursor: pointer;
 }
 
+/* Adds in the 'show' modal/popup styling. */
 .modal {
     display: none;
 }

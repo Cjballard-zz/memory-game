@@ -5,6 +5,7 @@
     }
 }
 
+/* Adds responsive logic on medium screens */
 @media screen and (max-width: 549px) {
     body h1 {
         font-weight: 300;
@@ -20,6 +21,7 @@
     }
 }
 
+/* Adds responsive logic on small screens */
 @media screen and (max-width: 400px) {
     body h1 {
         font-weight: 300;
@@ -53,5 +55,3 @@
         margin-right: 40px;
     }
 }
-
-/* add more here */
