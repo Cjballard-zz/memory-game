@@ -146,7 +146,6 @@ function findMatch() {
         toggledCards = [];
         matched++;
         if (matched == pairs ) {
-            console.log(moves);
             modalData();
             resetTimer();
             resetMatched();
@@ -224,8 +223,6 @@ function resetMatched() {
 function modalData() {
     const clockTime = document.querySelector('.clock').innerHTML;
     const starsRating = document.querySelector('ul.stars').childElementCount;
-    //document.querySelector('.moves').innerHTML = moves;
-
 
     printout.innerHTML = `It took you ${clockTime}. You made ${moves} moves. Your star rating is ${starsRating}.`
 }
