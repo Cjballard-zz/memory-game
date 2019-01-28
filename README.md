@@ -12,3 +12,6 @@ Elbow grease, grit, trial, error, tears and resilience. Lots of combing through 
 
 ### Screenshot
 <img src="img/matching-game.png">
+
+### Dependencies
+This game is built with HTML, CSS, Javascript & Font Awesome icons.

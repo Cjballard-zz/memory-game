@@ -113,8 +113,8 @@ deck.addEventListener('click', function () {
         addToggleCard(clickTarget);
         // Look for a match with the toggled cards.
         if (toggledCards.length === 2) {
-            findMatch(clickTarget);
             countMoves();
+            findMatch(clickTarget);
         // If the timer isn't running, start it up.
         if (timerStop) {
             timerStart();
@@ -146,10 +146,11 @@ function findMatch() {
         toggledCards = [];
         matched++;
         if (matched == pairs ) {
-            showModal();
+            console.log(moves);
             modalData();
             resetTimer();
             resetMatched();
+            showModal();
         }
     } 
     // Or else we time out the unmatched cards.
@@ -222,8 +223,9 @@ function resetMatched() {
 // Grabs a snapshot of data for the modal.
 function modalData() {
     const clockTime = document.querySelector('.clock').innerHTML;
-    const movesMade = document.querySelector('.moves').innerHTML;
     const starsRating = document.querySelector('ul.stars').childElementCount;
+    //document.querySelector('.moves').innerHTML = moves;
 
-    printout.innerHTML = `It took you ${clockTime}. You made ${movesMade} moves. Your star rating is ${starsRating}.`
+
+    printout.innerHTML = `It took you ${clockTime}. You made ${moves} moves. Your star rating is ${starsRating}.`
 }
