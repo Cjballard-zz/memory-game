@@ -105,7 +105,7 @@ function resetTimer() {
 
 
 // Core matching logic – listen for a click, and if the click target is valid, take action.
-deck.addEventListener('click', function () {
+deck.addEventListener('click', function(event) {
     const clickTarget = event.target;
     // Identify list of valid click targets and exclude targets we don't want to be able to click.
     if (clickTarget.classList.contains('card') && toggledCards.length < 2 && !clickTarget.classList.contains('match') && !toggledCards.includes(clickTarget)) {
