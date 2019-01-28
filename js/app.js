@@ -197,6 +197,7 @@ function resetGame() {
     resetMoves();
     addStars();
     switchCards();
+    toggledCards = [];
 }
 
 
